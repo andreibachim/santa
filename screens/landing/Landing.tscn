@@ -13,6 +13,17 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_mm3lp")
 
+[node name="NoServerWarning" type="Label" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 23.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+text = "Server is unavailable"
+horizontal_alignment = 1
+
 [node name="CenterContainer" type="CenterContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
@@ -71,6 +82,8 @@ always_on_top = true
 popup_window = true
 min_size = Vector2i(180, 120)
 max_size = Vector2i(0, 0)
+ok_button_text = "     OK     "
+cancel_button_text = "  Cancel  "
 
 [node name="MarginContainer" type="MarginContainer" parent="CenterContainer/LobbyNameDialog"]
 offset_right = 40.0
@@ -79,7 +92,7 @@ offset_bottom = 40.0
 [node name="LineEdit" type="LineEdit" parent="CenterContainer/LobbyNameDialog/MarginContainer"]
 layout_mode = 2
 size_flags_vertical = 4
-placeholder_text = "Lobby name"
+placeholder_text = "Lobby ID"
 
 [connection signal="text_changed" from="CenterContainer/VBoxContainer/LineEdit" to="." method="_on_line_edit_text_changed"]
 [connection signal="button_up" from="CenterContainer/VBoxContainer/Join" to="." method="_on_join_button_up"]
