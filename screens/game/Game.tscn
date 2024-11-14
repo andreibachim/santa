@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=3 uid="uid://knddk6nrlh56"]
+
+[ext_resource type="Script" path="res://screens/game/game.gd" id="1_xftp8"]
+[ext_resource type="Texture2D" uid="uid://c4uy0epnnfxrb" path="res://icon.svg" id="2_l1lav"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wxh4d"]
+size = Vector2(640, 20)
+
+[sub_resource type="QuadMesh" id="QuadMesh_kh3wp"]
+
+[node name="Game" type="Node2D"]
+script = ExtResource("1_xftp8")
+
+[node name="Ground" type="StaticBody2D" parent="."]
+position = Vector2(-120, 230)
+metadata/_edit_group_ = true
+
+[node name="Shape" type="CollisionShape2D" parent="Ground"]
+position = Vector2(320, 0)
+shape = SubResource("RectangleShape2D_wxh4d")
+
+[node name="Mesh" type="MeshInstance2D" parent="Ground"]
+position = Vector2(320, 1.52588e-05)
+scale = Vector2(640, -20)
+mesh = SubResource("QuadMesh_kh3wp")
+texture = ExtResource("2_l1lav")
+
+[node name="Players" type="Node2D" parent="."]
+position = Vector2(176, 117)
+
+[node name="PlayerSpawner" type="MultiplayerSpawner" parent="Players"]
+_spawnable_scenes = PackedStringArray("<null>")
+spawn_path = NodePath("..")
