@@ -4,7 +4,7 @@ class_name Lobby
 @onready var player_list := $UI/VBoxContainer/PlayerList
 @onready var start_button := $UI/VBoxContainer/HBoxContainer/Start
 @onready var lobby_id_value := $UI/VBoxContainer/LobbyIdContainer/HBoxContainer/LobbyIdValue
-@onready var overlay := $Overlay
+@onready var overlay := $UI/Overlay
 @onready var lobby_ui := $UI
 
 const lobby_player_packed_scene := preload("res://ui/components/LobbyPlayer.tscn")
@@ -75,28 +75,24 @@ func start_game() -> void:
 	var tween = get_tree().create_tween()
 	tween.tween_method(func(value: int): start_button.text = str(value), 5, 0, 5)
 	var world_seed = randi_range(10_000_000, 99_999_999)
-	var game: Game = Game.create(world_seed, Color.WHITE)
+	var game: Game = Game.create(world_seed)
 	game.generate()
-	tween.finished.connect(server_load_game_scene.bind(game, world_seed))
-
-#RUNS ON THE SERVER
-func server_load_game_scene(game: Game, world_seed: int) -> void:
-	lobby_ui.queue_free()
 	add_child(game)
-	for player: LobbyPlayer in player_list.get_children():
-		load_game_scene.rpc_id(player.peer_id, world_seed, player.modulate)
+	await tween.finished
 	lobby_ui.queue_free()
+	for player: LobbyPlayer in player_list.get_children():
+		load_game_scene.rpc_id(player.peer_id, 
+			game.random_seed,
+			player.text,
+			player.modulate)
 
 #RUNS ON THE CLIENTS
 @rpc("authority", "call_remote", "reliable")
-func load_game_scene(world_seed: int, color: Color) -> void:
+func load_game_scene(world_seed: int, player_name: String, color: Color) -> void:
 	var hide_tween = get_tree().create_tween()
 	hide_tween.tween_property(overlay, "modulate:a", 1, 0.2)
 	await hide_tween.finished
-	var game: Game = Game.create(world_seed, color)
+	var game: Game = Game.create_for_client(world_seed, player_name, color)
 	game.generate()
 	lobby_ui.queue_free()
 	add_child(game)
-	var show_tween = get_tree().create_tween()
-	show_tween.tween_property(overlay, "modulate:a", 0, 0.2)
-	await show_tween.finished

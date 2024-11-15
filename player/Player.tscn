@@ -14,17 +14,28 @@ properties/1/spawn = false
 properties/1/replication_mode = 2
 
 [node name="Player" type="CharacterBody2D"]
+collision_mask = 2
 script = ExtResource("1_ub80r")
 metadata/_edit_group_ = true
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Name" type="Label" parent="."]
+offset_left = -64.0
+offset_top = -36.0
+offset_right = 63.0
+offset_bottom = -13.0
+text = "AAAA"
+horizontal_alignment = 1
+
+[node name="Camera" type="Camera2D" parent="."]
+offset = Vector2(60, 40)
+
+[node name="Sprite" type="Sprite2D" parent="."]
 position = Vector2(7.15256e-07, 0)
 scale = Vector2(0.15625, 0.25)
 texture = ExtResource("2_e1twk")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="Shape" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_d81a7")
 
 [node name="Synchronizer" type="MultiplayerSynchronizer" parent="."]
-physics_interpolation_mode = 1
 replication_config = SubResource("SceneReplicationConfig_bjvky")

@@ -19,17 +19,6 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_xv6ys")
 
-[node name="Overlay" type="ColorRect" parent="."]
-modulate = Color(0, 0, 0, 0)
-top_level = true
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-
 [node name="UI" type="MarginContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
@@ -85,6 +74,12 @@ text = "Start"
 
 [node name="Synchronizer" type="MultiplayerSynchronizer" parent="UI/VBoxContainer/HBoxContainer/Start"]
 replication_config = SubResource("SceneReplicationConfig_bdwdd")
+
+[node name="Overlay" type="ColorRect" parent="UI"]
+modulate = Color(0, 0, 0, 0)
+top_level = true
+layout_mode = 2
+mouse_filter = 2
 
 [connection signal="button_up" from="UI/VBoxContainer/HBoxContainer/Leave" to="." method="_on_leave_button_up"]
 [connection signal="button_up" from="UI/VBoxContainer/HBoxContainer/Start" to="." method="_on_start_button_up"]
