@@ -12,7 +12,7 @@ var lobby_packed_scene := preload("res://screens/lobby/Lobby.tscn")
 
 var server_available: bool = false
 
-const SERVER_IP: String = "localhost"
+const SERVER_IP: String = "192.168.0.130"
 const LOBBY_PORT: int = 7000
 
 func _ready() -> void:
