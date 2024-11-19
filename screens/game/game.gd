@@ -52,6 +52,7 @@ func client_game_ready(_player_name: String, _color: Color) -> void:
 func _spawn_player(data) -> Player:
 	get_tree().create_tween().tween_property(ui_overlay, "modulate:a", 0, 0.2)
 	var player: Player = player_packed_scene.instantiate()
+	player.set_name(str(data.peer_id))
 	player.set_multiplayer_authority(data.peer_id)
 	player.set_player_name(data.player_name)
 	player.set_color(data.color)
